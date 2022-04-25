@@ -10,8 +10,7 @@ def unique_values(df):
         df_col = df[column]
         uniqe_values = df_col.unique()
         #print ("column "+ str(column) + " unique values are" + str (uniqe_values))
-    
-
+        #print ("column "+ str(column) + " has ",len(uniqe_values)," unique values")
 def split_reason(row):
     # if we split the decription based on ":"  3 columns will be created since we have 2 ":"
     split = row['description'].split(':')
@@ -70,7 +69,7 @@ def prepare_data( file, remove_descriptions=True,sample='none'):
 
     # simple spliting shows that the decription has different size of words for differnt events
     # lets check the number of unique values in each column
-    unique_values(df_split)
+    # unique_values(df_split)
     df_split.drop(labels=[0,1,2,3], axis=1, inplace=True)
     #print(df_split.info()) #check the number of columns before droping
 
@@ -101,7 +100,7 @@ def prepare_data( file, remove_descriptions=True,sample='none'):
     df['Junction'] = df['Junction'].astype("category")
     df['Reason'] = df['Reason'].astype("category")
     df['SensorsID'] = df['SensorsID'].astype("category")
-
+    unique_values(df)
 
 
     words_list =[]
@@ -124,7 +123,7 @@ def prepare_data( file, remove_descriptions=True,sample='none'):
             temp_word = []
             for junc in row['Junction'].split(','):
                 temp_word.append(junc)
-            temp_word.append(row['Reason'])
+            #temp_word.append(row['Reason'])
             temp_word.append(row['Orientation'])
             words_list.append(temp_word)
             words_dic[event_id] = temp_word
@@ -145,15 +144,9 @@ def prepare_data( file, remove_descriptions=True,sample='none'):
          # Time an event (classes 0-1-0) started and ended (before and after event)
         start_end[k] = (start_time[k], end_time[k])
 
-    #unique_values(df)
-    # print(df.head(5))
-    # print("----------------------------------------------------------------")
-    # print(words_dic)
-    # print("----------------------------------------------------------------")
-    # print(start_end)
-    # print("-----------------------------------------------------------------")
-    # print(event_time)
     return words_dic,start_end,event_time
 
 
-# prepare_data()
+
+if __name__ == '__main__':
+    prepare_data()
