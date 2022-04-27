@@ -4,21 +4,30 @@ from datetime import datetime
 import string
 import statistics as st
 
+
 def event_properties(matching_tweets,reported_time,printing=True):
     # Find the average time of an incident (since the reported time until it is considered not happening)
     diff_minutes = []
+
+
+
     for key in matching_tweets:
       start = datetime.fromtimestamp(reported_time[key][0])
       end = datetime.fromtimestamp(reported_time[key][1])
       diff_min = int((end-start).total_seconds()/60) # time diff in minutes
       diff_minutes.append(diff_min)
     average = int (sum(diff_minutes)/len(diff_minutes))
+
     if (printing):
       print('The average time for an event is :'+ str (average) + "   No. of events: " + str(len(diff_minutes))) #+
+
+
+
       print('The Median time for an event is :',st.median(diff_minutes))
       print('The Max time for an event is :',max(diff_minutes))
       print('The Min time for an event is :',min(diff_minutes))
     return diff_minutes
+
 def remove_unmached(df):
   # Remove unmached events 
   for key in unmatched:
@@ -26,17 +35,19 @@ def remove_unmached(df):
     df = df[df['EventID']!=key]
   print("Number of Matched events: ",len(df['EventID'].unique()))
   return df
-def unmatched_events(filter_words,matching_tweets):
-  i =0
-  unmatched = []
-  for key in filter_words:
-    if key in matching_tweets.keys():
-      pass
-    else:
-      unmatched.append(key)
-      i+=1
-     # print(i," UnMatched Event: ",key)
-  return unmatched
+
+
+# def unmatched_events(filter_words,matching_tweets):
+#   i =0
+#   unmatched = []
+#   for key in filter_words:
+#     if key in matching_tweets.keys():
+#       pass
+#     else:
+#       unmatched.append(key)
+#       i+=1
+#      # print(i," UnMatched Event: ",key)
+#   return unmatched
 def printer(matching_tweets,filter_words,event_time,reported_time):
   print ("------------------------ Matching tweets --------------------------------")
   iter=1
@@ -108,8 +119,17 @@ printer(matching_tweets,filter_words,event_time,reported_time)
 unmatched = unmatched_events(filter_words,matching_tweets)
 print ("\nUnmatched events", unmatched)
 
+
 # remove unmatched events
 df = remove_unmached(df)
+
+# # Remove unmached events 
+# for key in unmatched:
+#   # remove rows with events that are unmached
+#   df = df[df['EventID']!=key]
+# print("Number of Matched events: ",len(df['EventID'].unique()))
+
+
 # let's see properties of the matched Events
 incident_duration = event_properties (matching_tweets,reported_time,True)
 
