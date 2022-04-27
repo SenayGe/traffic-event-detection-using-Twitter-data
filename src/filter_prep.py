@@ -144,7 +144,7 @@ def prepare_data( file, remove_descriptions=True,sample='none'):
          # Time an event (classes 0-1-0) started and ended (before and after event)
         start_end[k] = (start_time[k], end_time[k])
 
-    return words_dic,start_end,event_time
+    return words_dic,start_end,event_time,df
 
 
 
