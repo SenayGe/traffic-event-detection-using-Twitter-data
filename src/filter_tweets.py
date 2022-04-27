@@ -29,7 +29,6 @@ for index, row in tweets_df.iterrows():
   # print ("Index: ", index)
   tweet = row['Tweeet'].translate(str.maketrans('', '', string.punctuation)) # remove punctuation
   # dt_object = datetime.fromtimestamp(row["Created time"])
-  # print ("timeee:", dt_object)
   event = None
   for key in filter_words:
     event = key
