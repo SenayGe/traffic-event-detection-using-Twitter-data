@@ -45,10 +45,7 @@ def event_properties(matching_tweets,reported_time,printing=True):
     average = int (sum(diff_minutes)/len(diff_minutes))
 
     if (printing):
-      print('The average time for an event is :'+ str (average) + "   No. of events: " + str(len(diff_minutes))) #+
-
-
-
+      print('The average time for an event is :'+ str (average) + "   No. of events: " + str(len(diff_minutes))) 
       print('The Median time for an event is :',st.median(diff_minutes))
       print('The Max time for an event is :',max(diff_minutes))
       print('The Min time for an event is :',min(diff_minutes))
@@ -159,12 +156,11 @@ def database_creation(lifetime=278):  #-------------------- FILTERING TWEETS ---
     if tweet age is >= 287 then new_feature = 0;
     '''
 
-
-
     # add the new feature as to the dataframe
     tweet_feature,binary_feature = add_tweet(df,matching_tweets,lifetime)
     df['tweet_lifetime'] = tweet_feature
     df['tweet_binary'] = binary_feature
+    df['tweet_binary']=df['tweet_binary'].astype("category")
     return df
 
 if __name__ == '__main__':
