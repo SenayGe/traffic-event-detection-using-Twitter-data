@@ -5,6 +5,7 @@ import string
 import statistics as st
 
 
+<<<<<<< HEAD
 def add_tweet(df,matching_tweets,lifetime=287): # default life time of a tweet
 # add a new feature with timestamp from tweeter
 # set the max lifetime of a tweet 
@@ -32,39 +33,55 @@ def add_tweet(df,matching_tweets,lifetime=287): # default life time of a tweet
 
   return tweet_feature,binary_feature
 
+=======
+>>>>>>> bedd44730d09e0d0913907ad3ad8dfe2c0b0d5d4
 def event_properties(matching_tweets,reported_time,printing=True):
     # Find the average time of an incident (since the reported time until it is considered not happening)
     diff_minutes = []
+
+
+
     for key in matching_tweets:
       start = datetime.fromtimestamp(reported_time[key][0])
       end = datetime.fromtimestamp(reported_time[key][1])
       diff_min = int((end-start).total_seconds()/60) # time diff in minutes
       diff_minutes.append(diff_min)
     average = int (sum(diff_minutes)/len(diff_minutes))
+
     if (printing):
       print('The average time for an event is :'+ str (average) + "   No. of events: " + str(len(diff_minutes))) #+
+
+
+
       print('The Median time for an event is :',st.median(diff_minutes))
       print('The Max time for an event is :',max(diff_minutes))
       print('The Min time for an event is :',min(diff_minutes))
     return diff_minutes
+<<<<<<< HEAD
 def remove_unmached(df,unmatched):
+=======
+
+def remove_unmached(df):
+>>>>>>> bedd44730d09e0d0913907ad3ad8dfe2c0b0d5d4
   # Remove unmached events 
   for key in unmatched:
     # remove rows with events that are unmached
     df = df[df['EventID']!=key]
   print("Number of Matched events: ",len(df['EventID'].unique()))
   return df
-def unmatched_events(filter_words,matching_tweets):
-  i =0
-  unmatched = []
-  for key in filter_words:
-    if key in matching_tweets.keys():
-      pass
-    else:
-      unmatched.append(key)
-      i+=1
-     # print(i," UnMatched Event: ",key)
-  return unmatched
+
+
+# def unmatched_events(filter_words,matching_tweets):
+#   i =0
+#   unmatched = []
+#   for key in filter_words:
+#     if key in matching_tweets.keys():
+#       pass
+#     else:
+#       unmatched.append(key)
+#       i+=1
+#      # print(i," UnMatched Event: ",key)
+#   return unmatched
 def printer(matching_tweets,filter_words,event_time,reported_time):
   print ("------------------------ Matching tweets --------------------------------")
   iter=1
@@ -92,6 +109,7 @@ def database_creation(lifetime=278):  #-------------------- FILTERING TWEETS ---
       tweet = row['Tweeet'].translate(str.maketrans('', '', string.punctuation))
 
 
+<<<<<<< HEAD
       # dt_object = datetime.fromtimestamp(row["Created time"])
       # print ("timeee:", dt_object)
       for key in filter_words:
@@ -164,3 +182,72 @@ if __name__ == '__main__':
   print (df.info())
 
  
+=======
+  # dt_object = datetime.fromtimestamp(row["Created time"])
+  # print ("timeee:", dt_object)
+  for key in filter_words:
+    matched = [] 
+    # Checking filter words
+
+    for word in filter_words[key]:
+
+      matched.append(word.lower() in tweet.lower().split())
+    # print (matched)
+
+    # Checking time
+    if all(matched):
+      tweet_time = row["Created time"]
+      # if tweet_time > event_time[key][0] and tweet_time < event_time[key][1]:
+      #   matching_tweets[key] = [tweet, tweet_time]
+      #   continue
+      if key not in reported_time.keys() :  # tweet found but no incident reported
+        #print(key," Possible Event without incident found.......")
+        if tweet_time > event_time[key][0] and tweet_time < event_time[key][1]:
+          if (key in matching_tweets):
+            pass
+          else:
+            matching_tweets[key] = [tweet, tweet_time]
+            print("Event without incident found.......")
+      elif tweet_time > event_time[key][0] and tweet_time < reported_time[key][1]:
+        if (key in matching_tweets):  # if key already in matching ignore
+          #print("----------------------Repeated",key,"--------------------------")
+          # print("previous data : ",matching_tweets[key][0]," ",(datetime.fromtimestamp(matching_tweets[key][1])))
+          # print("New data : ",tweet," ",datetime.fromtimestamp(tweet_time))
+          # print("Event data : ",filter_words[key]," ",datetime.fromtimestamp(reported_time[key][0]))
+          # matching_tweets[key].append([tweet, tweet_time])
+          #print("New AFTER appending : ",matching_tweets[key])
+          pass
+        else:
+          matching_tweets[key] = [tweet, tweet_time]
+        
+print ("\nSUCCESS!")
+print ("\nTweets Info: ")
+print (tweets_df.info(),sep='\n')
+printer(matching_tweets,filter_words,event_time,reported_time)
+unmatched = unmatched_events(filter_words,matching_tweets)
+print ("\nUnmatched events", unmatched)
+
+
+# remove unmatched events
+df = remove_unmached(df)
+
+# # Remove unmached events 
+# for key in unmatched:
+#   # remove rows with events that are unmached
+#   df = df[df['EventID']!=key]
+# print("Number of Matched events: ",len(df['EventID'].unique()))
+
+
+# let's see properties of the matched Events
+incident_duration = event_properties (matching_tweets,reported_time,True)
+
+''' Life time of a tweet is important to decide on which tweets are relevant,
+from the above code we can see that the average event lasts around 127 minutes (median = 125)
+the max and min are 287 and 26 mins repectively.Since the max duration of an event is 287 mins 
+we can assume that a tweet is not relevant after 287 minutes. This means tweet data will help us
+detect incidents as long as it is not older than 287 mins (4 hours 27 mins). Since a tweet should
+have the same relevance with time, we should encode the tweet age somehow into the input.
+i.e --> new_feature = 287 - tweet age , tweet age = current timestamp - tweet timestamp
+if tweet age is >= 287 then new_feature = 0;
+'''
+>>>>>>> bedd44730d09e0d0913907ad3ad8dfe2c0b0d5d4
