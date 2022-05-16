@@ -49,10 +49,12 @@ def printer(matching_tweets,filter_words,event_time,reported_time):
   print ("\nNumber of Events: ",len(event_time.keys())) 
 
 #-------------------- FILTERING TWEETS ------------------------
-tweets_df = pd.read_csv("Data/fetched_tweets.csv", sep=',', header=0) # reading feteched tweets
+tweets_file = "/Users/sg/Documents/UNI/2-Software-Eng/Project/Twitter-based-traffic-event-detection/Data/fetched_tweets.csv"
+sensors_file = "/Users/sg/Documents/UNI/2-Software-Eng/Project/Twitter-based-traffic-event-detection/Data/m25_sensors_data.csv"
+tweets_df = pd.read_csv(tweets_file, sep=',', header=0) # reading feteched tweets
 # test_df = pd.read_csv("Data/books.csv", sep=',', header=0) 
 # print (test_df.info())
-filter_words, event_time, reported_time,df = prepare_data("Data/m25_sensors_data.csv") # filter data
+filter_words, event_time, reported_time,df = prepare_data(sensors_file) # filter data
 matching_tweets = {}
 for index, row in tweets_df.iterrows():
   #print ("Index: ", index)
