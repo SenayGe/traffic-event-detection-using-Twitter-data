@@ -3,11 +3,9 @@
 
 # Miscellaneous 
 *.DS_Store
-<<<<<<< HEAD
+
 /src/__pycache__/
-=======
-Src/__pycache__/
 
 # Config file
-Src/config.ini
->>>>>>> tweets-preprocessing
+src/config.ini
+
