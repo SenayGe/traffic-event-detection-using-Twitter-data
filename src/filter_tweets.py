@@ -156,7 +156,7 @@ def database_creation(lifetime=278):  #-------------------- FILTERING TWEETS ---
     if tweet age is >= 287 then new_feature = 0;
     '''
 
-    # add the new feature as to the dataframe
+    # add the new feature as to the dataframe / FUSING THE DATASET
     tweet_feature,binary_feature = add_tweet(df,matching_tweets,lifetime)
     df['tweet_lifetime'] = tweet_feature
     df['tweet_binary'] = binary_feature
