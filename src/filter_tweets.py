@@ -31,7 +31,7 @@ def add_tweet(df,matching_tweets,lifetime=287): # default life time of a tweet
 
   return tweet_feature,binary_feature
 
-def event_properties(matching_tweets,reported_time,printing=True):
+def event_properties(matching_tweets,reported_time,printing=False):
     # Find the average time of an incident (since the reported time until it is considered not happening)
     diff_minutes = []
 
@@ -83,8 +83,8 @@ def printer(matching_tweets,filter_words,event_time,reported_time):
     # print ("Incident reported_time End: ",datetime.fromtimestamp(reported_time[key][1]))
     # print ("Event End Time ",datetime.fromtimestamp(event_time[key][1]))
     iter+=1
-  print ("\nNumber of matchs: ",len(matching_tweets.keys())) 
-  print ("\nNumber of Events: ",len(event_time.keys())) 
+  # print ("\nNumber of matchs: ",len(matching_tweets.keys())) 
+  # print ("\nNumber of Events: ",len(event_time.keys())) 
 
 def database_creation(lifetime=278):  #-------------------- FILTERING TWEETS ------------------------
     tweets_df = pd.read_csv("Data/fetched_tweets.csv", sep=',', header=0) # reading feteched tweets
@@ -135,11 +135,11 @@ def database_creation(lifetime=278):  #-------------------- FILTERING TWEETS ---
               matching_tweets[key] = [tweet, tweet_time]
             
     print ("\nSUCCESS!")
-    print ("\nTweets Info: ")
-    print (tweets_df.info(),sep='\n')
-    printer(matching_tweets,filter_words,event_time,reported_time)
+    #print ("\nTweets Info: ")
+    #print (tweets_df.info(),sep='\n')
+    #printer(matching_tweets,filter_words,event_time,reported_time)
     unmatched = unmatched_events(filter_words,matching_tweets)
-    print ("\nUnmatched events", unmatched)
+    #print ("\nUnmatched events", unmatched)
 
     # remove unmatched events
     df = remove_unmached(df,unmatched)
