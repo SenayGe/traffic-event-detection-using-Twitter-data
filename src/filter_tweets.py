@@ -4,7 +4,8 @@ from datetime import datetime
 import string
 import statistics as st
 
-def event_properties(matching_tweets,reported_time,print=True):
+
+def event_properties(matching_tweets,reported_time, print_output=True):
     # Find the average time of an incident (since the reported time until it is considered not happening)
     diff_minutes =[]
     for key in matching_tweets:
@@ -13,7 +14,8 @@ def event_properties(matching_tweets,reported_time,print=True):
       diff_min = int((end-start).total_seconds()/60) # time diff in minutes
       diff_minutes.append(diff_min)
     average = int (sum(diff_minutes)/len(diff_minutes))
-    if print:
+    print ("average is " + str(average))
+    if print_output:
       print('The average time for an event is :',average, " No. of events: ",len(diff_minutes))
       print('The Median time for an event is :',st.median(diff_minutes))
       print('The Max time for an event is :',max(diff_minutes))
