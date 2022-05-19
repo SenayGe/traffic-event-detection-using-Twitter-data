@@ -4,3 +4,6 @@
 # Miscellaneous 
 *.DS_Store
 Src/__pycache__/
+
+# Config file
+Src/config.ini
