@@ -2,7 +2,7 @@
 ---
 ## Available modules and scripts
 - main.py - Train and run the event detector
-- tweets_fetch.py - Fetches tweets from twitter using tweeter api
+- tweets_fetch.py - Fetches tweets from twitter using twitter api
 - filter_tweets.py - tweets preprocessing
 - models - Defines our deep learning models
 - training_ML - to trian via ML models (decision tree, Random Forest, XGboosting...)
