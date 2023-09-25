@@ -3,7 +3,7 @@ This repository contains the the implementation of machine learning based traffi
 
 ### System architecture
 
-<img src="https://raw.githubusercontent.com/SenayGe/traffic-event-detection-using-Twitter-data/master/system_architecture.png" >
+<img src="https://raw.githubusercontent.com/SenayGe/traffic-event-detection-using-Twitter-data/master/system_architecture.png"  width=80% height=80% >
 ## Available modules and scripts
 - main.py - Train and run the event detector
 - tweets_fetch.py - Fetches tweets from twitter using twitter api
